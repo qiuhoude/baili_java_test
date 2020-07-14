@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <vertx.version>3.4.2</vertx.version>
+        <vertx.version>3.9.1</vertx.version>
         <curator-version>4.0.1</curator-version>
         <zookeeper-version>3.4.10</zookeeper-version>
     </properties>
