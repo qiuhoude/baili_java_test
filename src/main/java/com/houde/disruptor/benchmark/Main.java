@@ -40,7 +40,7 @@ public class Main {
         }
         executor.submit(batchEventProcessor);
         long start = System.currentTimeMillis();
-        cyclicBarrier.await(); //start test
+        cyclicBarrier.await(); //start GraphTest
         for (int i = 0; i < NUM_PUBLISHERS; i++) {
             futures[i].get();
         } //all published

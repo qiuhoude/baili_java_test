@@ -16,3 +16,4 @@ public interface Message {
 	/** Get any parameter data associated with the message. */
 	Object getData();
 }
+

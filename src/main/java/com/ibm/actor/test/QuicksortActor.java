@@ -239,7 +239,7 @@ public class QuicksortActor extends TestableActor {
 
 	Random rand = new Random();
 
-	// test case
+	// GraphTest case
 
 	public void run(ActorManager am, int count) {
 		Actor a = createQuicksortActor(am);

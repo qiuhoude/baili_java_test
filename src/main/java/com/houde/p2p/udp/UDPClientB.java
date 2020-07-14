@@ -38,7 +38,7 @@ public class UDPClientB {
         try {
             SocketAddress target = new InetSocketAddress(host, Integer.parseInt(port));
             for (; ; ) {
-                String message = "I am master 192.168.85.129 count test";
+                String message = "I am master 192.168.85.129 count GraphTest";
                 byte[] sendbuf = message.getBytes();
                 DatagramPacket pack = new DatagramPacket(sendbuf, sendbuf.length, target);
                 client.send(pack);
@@ -64,7 +64,7 @@ public class UDPClientB {
                 //记得重新收地址与端口，然后在以新地址发送内容到UPDClientA,就这样互发就可以了。
                 int port = recpack.getPort();
                 InetAddress address = recpack.getAddress();
-                String reportMessage = "I am master 192.168.85.129 count test";
+                String reportMessage = "I am master 192.168.85.129 count GraphTest";
 
                 //发送消息
                 sendMessage(reportMessage, port, address, client);

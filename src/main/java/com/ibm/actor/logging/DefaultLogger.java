@@ -385,7 +385,7 @@ public class DefaultLogger implements Logger {
 
 	private boolean logToConsole = true;
 	/*
-	 * // test case public static void main(String[] args) { DefaultLogger lu =
+	 * // GraphTest case public static void main(String[] args) { DefaultLogger lu =
 	 * new DefaultLogger(); lu.setIncludeStacktrace(true); lu.setFileLogger(new
 	 * FileLogger("/temp/log"));
 	 * 
@@ -393,7 +393,7 @@ public class DefaultLogger implements Logger {
 	 * "sub"); lu.error("error message: %s", "sub");
 	 * lu.notify("notify message: %s", "sub");
 	 * 
-	 * Exception e = new Exception("test exception"); lu.error("error message",
+	 * Exception e = new Exception("GraphTest exception"); lu.error("error message",
 	 * e); lu.notify("notify message", e);
 	 * 
 	 * lu.setContext(DefaultLogger.class); lu.info("info message: %s", "sub"); }

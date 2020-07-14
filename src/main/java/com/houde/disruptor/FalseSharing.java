@@ -1,5 +1,7 @@
 package com.houde.disruptor;
 
+import sun.misc.Contended;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -69,7 +71,7 @@ public class FalseSharing implements Runnable {
         protected long p9, p10, p11, p12, p13, p14, p15;
     }
 
-//    @Contended
+    @Contended
     public final static class PaddedAtomic extends AtomicInteger {
         private long p1, p2, p3, p4, p5, p6 ;
         private int p8;

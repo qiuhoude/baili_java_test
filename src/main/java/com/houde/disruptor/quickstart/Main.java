@@ -3,23 +3,26 @@ package com.houde.disruptor.quickstart;
 import com.lmax.disruptor.BusySpinWaitStrategy;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.WorkHandler;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author qiukun
  * @create 2019-08-06 20:01
  */
 public class Main {
+    static AtomicLong threadId = new AtomicLong(0);
 
     public static void main(String[] args) {
 
-        ThreadFactory tf = r->{
+        ThreadFactory tf = r -> {
             Thread t = new Thread(r);
-            t.setName("order-thread");
+            t.setName("order-thread-" + threadId.incrementAndGet());
             if (t.isDaemon()) {
                 t.setDaemon(false);
             }
@@ -36,10 +39,13 @@ public class Main {
          * 5 waitStrategy: 等待策略
          */
         //1. 实例化disruptor对象
-        Disruptor<OrderEvent> disruptor = new Disruptor<>(OrderEvent.EVENT_FACTORY, 1024 * 1024, tf, ProducerType.SINGLE, new BusySpinWaitStrategy());
+        Disruptor<OrderEvent> disruptor = new Disruptor<>(OrderEvent.EVENT_FACTORY,
+                4, tf, ProducerType.SINGLE, new BusySpinWaitStrategy());
 
         //2. 添加消费者的监听 (构建disruptor 与 消费者的一个关联关系)
-        disruptor.handleEventsWith(new OrderEventHandler());
+//        disruptor.handleEventsWith(new OrderEventHandler()).handleEventsWith(new OrderEventHandler());
+        disruptor.handleEventsWithWorkerPool(new OrderWorkHandler(1), new OrderWorkHandler(2));
+
 
         //3. 启动disruptor
         //4. 获取实际存储数据的容器: RingBuffer
@@ -48,7 +54,7 @@ public class Main {
 
         ByteBuffer bb = ByteBuffer.allocate(8);
 
-        for (long i = 0; i < 5; i++) {
+        for (long i = 1; i < 20; i++) {
             bb.putLong(0, i);
             producer.sendData(bb);
         }
@@ -58,12 +64,30 @@ public class Main {
 
 
     static class OrderEventHandler implements EventHandler<OrderEvent> {
+        private final int id;
+
+        OrderEventHandler(int id) {
+            this.id = id;
+        }
 
         @Override
         public void onEvent(OrderEvent event, long sequence, boolean endOfBatch) throws Exception {
-            System.out.println(Thread.currentThread().getName() + " 消费者: " + event.getValue());
+            System.out.println(Thread.currentThread().getName() + " event消费者-" + id + " :" + event.getValue());
         }
     }
 
+    static class OrderWorkHandler implements WorkHandler<OrderEvent> {
+
+        private final int id;
+
+        OrderWorkHandler(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public void onEvent(OrderEvent event) throws Exception {
+            System.out.println(Thread.currentThread().getName() + " work消费者-" + id + " :" + event.getValue());
+        }
+    }
 
 }

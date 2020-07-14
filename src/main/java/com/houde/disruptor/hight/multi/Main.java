@@ -35,7 +35,7 @@ public class Main {
         ringBuffer.addGatingSequences(workerPool.getWorkerSequences());
 
         //6 启动workerPool
-        workerPool.start(Executors.newFixedThreadPool(5));
+        workerPool.start(Executors.newFixedThreadPool(10));
         final int num = 3;
 
         CyclicBarrier cyclicBarrier = new CyclicBarrier(num + 1);
@@ -52,13 +52,12 @@ public class Main {
                     for (int j = 0; j < num; j++) {
                         producer.sendData(UUID.randomUUID().toString());
                     }
-
                 }
             }).start();
         }
         cyclicBarrier.await();
         System.err.println("----------线程创建完毕，开始生产数据----------" + cyclicBarrier.getNumberWaiting());
-
+        cyclicBarrier.await();
         System.err.println("任务总数:" + consumers[2].getCount());
 
     }

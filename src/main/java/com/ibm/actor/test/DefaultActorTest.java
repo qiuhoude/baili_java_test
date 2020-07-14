@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /** 
- * A set of runtime services for testing actors and a test case driver. 
+ * A set of runtime services for testing actors and a GraphTest case driver.
  * 
  * @author BFEIGENB
  *
@@ -226,7 +226,7 @@ public class DefaultActorTest extends Utils {
 					System.out.printf("Unknown switch: %s%n", arg);
 				}
 			} else {
-				if (arg.equalsIgnoreCase("test") || arg.equalsIgnoreCase("countdown") || arg.equalsIgnoreCase("cd")) {
+				if (arg.equalsIgnoreCase("GraphTest") || arg.equalsIgnoreCase("countdown") || arg.equalsIgnoreCase("cd")) {
 					doTest = true;
 				} else if (arg.equalsIgnoreCase("producerconsumer") || arg.equalsIgnoreCase("pc")) {
 					doProduceConsume = true;

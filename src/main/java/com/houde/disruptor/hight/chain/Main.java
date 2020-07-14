@@ -22,30 +22,35 @@ public class Main {
 
 
         // 串行操作：
-//     disruptor.handleEventsWith(new Handler1())
-//                .handleEventsWith(new Handler2())
-//                .handleEventsWith(new Handler3());
-//
+        disruptor.handleEventsWith(new Handler1())
+                .handleEventsWith(new Handler2())
+                .handleEventsWith(new Handler3());
+
 
         // 并行操作: 可以有两种方式去进行
+        // (1)
 //        disruptor.handleEventsWith(new Handler1(),new Handler2(),new Handler3());
+//        // (2)
+//        disruptor.handleEventsWith(new Handler1());
+//        disruptor.handleEventsWith(new Handler2());
+//        disruptor.handleEventsWith(new Handler3());
 
         // 菱形操作 (一) handler1 handler2 并行 ,最后执行handler3
 //        disruptor.handleEventsWith(new Handler1(), new Handler2())
-//        .handleEventsWith(new Handler3());
+//                .handleEventsWith(new Handler3());
         // 菱形操作 (二)
 //        disruptor.handleEventsWith(new Handler1(), new Handler2()).then(new Handler3());
 
         // 六边形操作
-        Handler1 h1 = new Handler1();
-        Handler2 h2 = new Handler2();
-        Handler3 h3 = new Handler3();
-        Handler4 h4 = new Handler4();
-        Handler5 h5 = new Handler5();
-        disruptor.handleEventsWith(h1, h4);
-        disruptor.after(h1).handleEventsWith(h2);
-        disruptor.after(h4).handleEventsWith(h5);
-        disruptor.after(h2, h5).handleEventsWith(h3);
+//        Handler1 h1 = new Handler1();
+//        Handler2 h2 = new Handler2();
+//        Handler3 h3 = new Handler3();
+//        Handler4 h4 = new Handler4();
+//        Handler5 h5 = new Handler5();
+//        disruptor.handleEventsWith(h1, h4);
+//        disruptor.after(h1).handleEventsWith(h2);
+//        disruptor.after(h4).handleEventsWith(h5);
+//        disruptor.after(h2, h5).handleEventsWith(h3);
 
         RingBuffer<Trade> ringBuffer = disruptor.start();
         CountDownLatch latch = new CountDownLatch(1);

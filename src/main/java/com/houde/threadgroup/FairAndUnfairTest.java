@@ -17,7 +17,7 @@ public class FairAndUnfairTest {
     public static void main(String[] args) {
         FairAndUnfairTest test = new FairAndUnfairTest();
          test.testLock(unfairLock);
-//        test.testLock(fairLock);
+//        GraphTest.testLock(fairLock);
     }
 
     private void testLock(Lock lock) {

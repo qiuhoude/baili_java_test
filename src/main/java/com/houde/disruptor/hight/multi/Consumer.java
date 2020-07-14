@@ -23,7 +23,7 @@ public class Consumer implements WorkHandler<OrderEvent> {
     @Override
     public void onEvent(OrderEvent event) throws Exception {
         Thread.sleep(1 * random.nextInt(5));
-        System.err.println("当前消费者: " + this.comsumerId + ", 消费信息ID: " + event.getId());
+        System.err.println(Thread.currentThread().getName()+" 当前消费者: " + this.comsumerId + ", 消费信息ID: " + event.getId());
         count.incrementAndGet();
     }
 

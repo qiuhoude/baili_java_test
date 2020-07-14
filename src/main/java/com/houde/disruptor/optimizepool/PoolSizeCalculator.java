@@ -21,7 +21,7 @@ public abstract class PoolSizeCalculator {
     private final int SAMPLE_QUEUE_SIZE = 1000;
 
     /**
-     * Accuracy of test run. It must finish within 20ms of the testTime otherwise we retry the test. This could be
+     * Accuracy of GraphTest run. It must finish within 20ms of the testTime otherwise we retry the GraphTest. This could be
      * configurable.
      */
     private final int EPSYLON = 20;
@@ -32,7 +32,7 @@ public abstract class PoolSizeCalculator {
     private volatile boolean expired;
 
     /**
-     * Time (millis) of the test run in the CPU time calculation.
+     * Time (millis) of the GraphTest run in the CPU time calculation.
      */
     private final long testtime = 3000;
 
@@ -48,7 +48,7 @@ public abstract class PoolSizeCalculator {
         start(task);
         start(task); // warm up phase
         long cputime = getCurrentThreadCPUTime();
-        start(task); // test intervall
+        start(task); // GraphTest intervall
         cputime = getCurrentThreadCPUTime() - cputime;
         long waittime = (testtime * 1000000) - cputime;
         calculateOptimalThreadCount(cputime, waittime, targetUtilization);

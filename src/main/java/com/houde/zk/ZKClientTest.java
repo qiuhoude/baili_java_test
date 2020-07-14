@@ -20,7 +20,7 @@ public class ZKClientTest {
         TimeUnit.SECONDS.sleep(3);
         ZKOperate zko = new ZKOperate();
         try {
-            String s = MyZooKeeper.zooKeeper.create("/test", "haha".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+            String s = MyZooKeeper.zooKeeper.create("/GraphTest", "haha".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
             System.out.println("main: s= " + s);
         } catch (KeeperException e) {
             e.printStackTrace();
