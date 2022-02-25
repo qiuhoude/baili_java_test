@@ -8,13 +8,13 @@ import java.util.concurrent.RecursiveTask;
 /**
  * Created by I on 2018/1/31.
  */
-public class CountTask extends RecursiveTask<Integer> {
+public class ForkJoinCountTask extends RecursiveTask<Integer> {
 
     private static final int THRESHOLD = 2; // 阈值
     private int start;
     private int end;
 
-    public CountTask(int start, int end) {
+    public ForkJoinCountTask(int start, int end) {
         this.start = start;
         this.end = end;
     }
@@ -31,8 +31,8 @@ public class CountTask extends RecursiveTask<Integer> {
         } else {
             // 如果任务大于阈值，就分裂成两个子任务计算
             int middle = (start + end) / 2;
-            CountTask lefTask = new CountTask(start, middle);
-            CountTask rightTask = new CountTask(middle, end);
+            ForkJoinCountTask lefTask = new ForkJoinCountTask(start, middle);
+            ForkJoinCountTask rightTask = new ForkJoinCountTask(middle, end);
             // 执行子任务
             lefTask.fork();
             rightTask.fork();
@@ -47,7 +47,7 @@ public class CountTask extends RecursiveTask<Integer> {
     public static void main(String[] args) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         // 生产计算任务 1+..4
-        CountTask task = new CountTask(1, 4);
+        ForkJoinCountTask task = new ForkJoinCountTask(1, 4);
         // 执行一个任务
         ForkJoinTask<Integer> result = forkJoinPool.submit(task);
 

@@ -4,8 +4,8 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class ScriptTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        try {
 //            script2();
 //        } catch (ScriptException e) {
@@ -24,7 +24,20 @@ public class ScriptTest {
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(new Date(0));
+        URL url = new URL("https://earthquake.usgs.gov/earthquakes/eventpage/usp000fbdn/focal-mechanism");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("d:/baidu.html"));
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+            writer.write(line);
+            writer.newLine();
+        }
+        reader.close();
+        writer.close();
+
+
     }
 
     private static void script2() throws ScriptException, NoSuchMethodException, FileNotFoundException {

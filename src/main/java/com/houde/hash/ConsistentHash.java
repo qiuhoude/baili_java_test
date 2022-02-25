@@ -88,20 +88,20 @@ public class ConsistentHash<T> {
     }
 
     public static void main(String[] args) {
-//        Set<String> nodes = new HashSet<String>();
-//        nodes.add("java");
-//        nodes.add("go");
-//        nodes.add("C");
-//
-//        ConsistentHash<String> consistentHash = new ConsistentHash<String>(2, nodes);
-//        consistentHash.add("D");
-//
-//        System.out.println("hash circle size: " + consistentHash.getSize());
-//        System.out.println("location of each node are follows: ");
-//        consistentHash.testBalance();
-//
-//        String node = consistentHash.get("apple");
-//        System.out.println("node----------->:" + node);
+        Set<String> nodes = new HashSet<String>();
+        nodes.add("java");
+        nodes.add("go");
+        nodes.add("C");
+
+        ConsistentHash<String> consistentHash = new ConsistentHash<String>(2, nodes);
+        consistentHash.add("D");
+
+        System.out.println("hash circle size: " + consistentHash.getSize());
+        System.out.println("location of each node are follows: ");
+        consistentHash.testBalance();
+
+        String node = consistentHash.get("apple");
+        System.out.println("node----------->:" + node);
 
     }
 

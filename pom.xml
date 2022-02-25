@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.houde</groupId>
@@ -43,12 +43,12 @@
             <version>2.2.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.23.1-GA</version>
-            <type>jar</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.javassist</groupId>-->
+            <!--<artifactId>javassist</artifactId>-->
+            <!--<version>3.23.1-GA</version>-->
+            <!--<type>jar</type>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>redis.clients</groupId>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>26.0-jre</version>
+            <version>31.0.1-jre</version>
         </dependency>
 
         <!--zk-->
@@ -255,11 +255,12 @@
             <artifactId>disruptor</artifactId>
             <version>3.3.6</version>
         </dependency>
-          <dependency>
-      <groupId>org.beykery</groupId>
-      <artifactId>cocosocket</artifactId>
-      <version>1.1.1</version>
-  </dependency>
+        <dependency>
+            <groupId>org.beykery</groupId>
+            <artifactId>cocosocket</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
         <!--  <dependency>
               <groupId>org.apache.curator</groupId>
               <artifactId>curator-recipes</artifactId>
@@ -294,9 +295,45 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.10.22</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>1.10.22</version>
+        </dependency>
 
-
+        <dependency>
+            <groupId>net.openhft</groupId>
+            <artifactId>chronicle-map</artifactId>
+            <version>3.22ea5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ahocorasick</groupId>
+            <artifactId>ahocorasick</artifactId>
+            <version>0.6.3</version>
+        </dependency>
     </dependencies>
+    <!-- 私服仓库配置 -->
+    <repositories>
+        <repository>
+            <id>maven-public</id>
+            <name>maven-public</name>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>http://maven.hundredcent.com:8081/repository/maven-public/</url>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <plugin>
@@ -314,54 +351,55 @@
             </plugin>
 
             <!-- Prepares Agent JAR before GraphTest execution -->
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-jar-plugin</artifactId>-->
-            <!--<version>2.4</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<phase>process-classes</phase>-->
-            <!--<goals>-->
-            <!--<goal>jar</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<archive>-->
-            <!--<manifestentries>-->
-            <!--<premain-class>com.houde.hotfix.instrumentation.Agent</premain-class>-->
-            <!--</manifestentries>-->
-            <!--</archive>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifestentries>
+                                    <premain-class>com.houde.hotfix.instrumentation.Agent</premain-class>
+
+                                </manifestentries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- executes GraphTest with -javaagent option -->
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-surefire-plugin</artifactId>-->
-            <!--<version>2.14</version>-->
-            <!--<configuration>-->
-            <!--<argLine>-javaagent:target/${project.build.finalName}.jar</argLine>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-jar-plugin</artifactId>-->
-            <!--<version>2.4</version>-->
-            <!--<configuration>-->
-            <!--<archive>-->
-            <!--<manifest>-->
-            <!--<addClasspath>true</addClasspath>  &lt;!&ndash; 在jar包中增加依赖jar路径说明 &ndash;&gt;-->
-            <!--<classpathPrefix>lib/</classpathPrefix>-->
-            <!--<mainClass>com.start.</mainClass>-->
-            <!--</manifest>-->
-            <!--&lt;!&ndash; 用maven在MANIFEST.MF资料中的Class-Path中增加当前目录(.) &ndash;&gt;-->
-            <!--<manifestEntries>-->
-            <!--<Class-Path>.</Class-Path>-->
-            <!--</manifestEntries>-->
-            <!--</archive>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
+           <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14</version>
+                <configuration>
+                    <argLine>-javaagent:target/${project.build.finalName}.jar</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>  &lt;!&ndash; 在jar包中增加依赖jar路径说明 &ndash;&gt;
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.start.</mainClass>
+                        </manifest>
+                        &lt;!&ndash; 用maven在MANIFEST.MF资料中的Class-Path中增加当前目录(.) &ndash;&gt;
+                        <manifestEntries>
+                            <Class-Path>.</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>-->
 
         </plugins>
 
